@@ -1,0 +1,10 @@
+:root {
+    --width: 60px;
+    --height: 60px;
+}
+
+.player {
+    width: var(--width);
+    height: var(--height);
+    background-color:rgb(59, 119, 101);
+}

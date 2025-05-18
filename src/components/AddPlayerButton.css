@@ -1,0 +1,10 @@
+#button {
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow:   -3px 0 0 0 black,
+                 3px 0 0 0 black,
+                 0 -3px 0 0 black,
+                 0 3px 0 0 black;
+}

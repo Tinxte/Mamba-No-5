@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 import { PlayerId } from "rune-sdk"
 
-import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic/logic.ts"
-
-const selectSound = new Audio(selectSoundAudio)
 
 function App() {
   const [game, setGame] = useState<GameState>()
@@ -16,7 +13,8 @@ function App() {
         setGame(game)
         setYourPlayerId(yourPlayerId)
 
-        if (action && action.name === "claimCell") selectSound.play()
+        // upon an action, play sound
+        // if (action && action.name === "claimCell") selectSound.play()
       },
     })
   }, [])
@@ -35,7 +33,8 @@ function App() {
           const cellValue = cells[cellIndex]
 
           return (
-            <button
+            <div
+            id="tile"
               key={cellIndex}
               onClick={() => Rune.actions.claimCell(cellIndex)}
               data-player={(cellValue !== null

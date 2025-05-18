@@ -5,7 +5,7 @@ Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup: (allPlayerIds) => ({
-    cells: new Array(9).fill(null),
+    cells: new Array(36).fill(null),
     winCombo: null,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,

@@ -12,6 +12,10 @@ html {
   font-family: "Silkscreen-Regular", Arial, Helvetica, sans-serif;
 }
 
+body {
+  background-image: url(./assets/space-grid-by-ivan-voirol.png);
+}
+
 main {
   display: flex;
   flex-direction: column;

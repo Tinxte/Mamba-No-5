@@ -9,3 +9,6 @@ hElLo WoRlD
 
 ![sticker_2069-256x256](https://github.com/user-attachments/assets/30258a94-a261-46ca-9f0d-2c95066d256b)
 
+## Credits
+
+Space Grid art by Ivan Voirol (https://opengameart.org/content/grid-hud)

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { PlayerId } from "rune-sdk"
 
 import { GameState } from "./logic/logic.ts"
+import { PlayerOne } from "./components/PlayerOne.tsx"
 
 function App() {
   const [game, setGame] = useState<GameState>()
@@ -26,8 +27,12 @@ function App() {
 
   const { winCombo, cells, lastMovePlayerId, playerIds, freeCells } = game
 
+  const playerPositionIndex = 1; 
+
+  
   return (
     <>
+      {/* Game Board / Dancefloor */}
       <div id="board" className={!lastMovePlayerId ? "initial" : ""}>
         {cells.map((cell, cellIndex) => {
           const cellValue = cells[cellIndex]
@@ -51,9 +56,31 @@ function App() {
                 ? { "data-disabled": "" }
                 : {})}
             />
+
+            // return player component if on index
+            // { (cellIndex===playerPositionIndex) ? <PlayerOne/> : <div/> }
           )
         })}
+
+            {/* <PlayerOne/> */}
+
+        {/* Player Sprites */}
+        
+        {/* <div> {cells.map((cell, cellIndex) => {
+          const cellValue = cells[cellIndex]
+          return (
+            <PlayerOne/>
+          )
+          })}
+        </div> */}
+
       </div>
+
+
+      
+
+
+        {/* Users */}
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
           const player = Rune.getPlayerInfo(playerId)

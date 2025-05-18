@@ -5,7 +5,7 @@ Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup: (allPlayerIds) => ({
-    cells: new Array(36).fill(null),
+    cells: new Array(49).fill(null),
     winCombo: null,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,
@@ -21,7 +21,7 @@ Rune.initLogic({
 
       game.cells[cellIndex] = playerId
       game.lastMovePlayerId = playerId
-      game.winCombo = findWinningCombo(game.cells)
+      // game.winCombo = findWinningCombo(game.cells)
 
       if (game.winCombo) {
         const [player1, player2] = allPlayerIds
@@ -65,20 +65,23 @@ declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
-function findWinningCombo(cells: Cells) {
-  return (
-    [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ].find((combo) =>
-      combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
-    ) || null
-  )
-}
+
+// boilerplate win condition
+
+// function findWinningCombo(cells: Cells) {
+//   return (
+//     [
+//       [0, 1, 2],
+//       [3, 4, 5],
+//       [6, 7, 8],
+//       [0, 3, 6],
+//       [1, 4, 7],
+//       [2, 5, 8],
+//       [0, 4, 8],
+//       [2, 4, 6],
+//     ].find((combo) =>
+//       combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
+//     ) || null
+//   )
+// }
 

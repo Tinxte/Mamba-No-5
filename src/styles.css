@@ -3,6 +3,11 @@
   src: url(../public/fonts/Silkscreen-Regular.ttf);
 }
 
+:root {
+  --player-one-color: #8fed8f;
+  --player-two-color: #f38a35;
+}
+
 body,
 html {
   padding: 0;
@@ -27,8 +32,7 @@ main {
 #board {
   aspect-ratio: 1;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  margin: 30px;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 #tile {
@@ -36,6 +40,20 @@ main {
   width: 32px;
   height: 32px;
   background: url("src/assets/dance-floor-tile-PwBB-Desaturated-32px.png") no-repeat;
+}
+
+.player {
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+}
+
+#player-1 {
+  background-color: var(--player-one-color);
+}
+
+#player-2 {
+  background-color: var(--player-two-color);
 }
 
 ul {

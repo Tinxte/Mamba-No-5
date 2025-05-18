@@ -28,32 +28,9 @@ function App() {
 
   return (
     <>
-      <div id="board" className={!lastMovePlayerId ? "initial" : ""}>
-        {cells.map((cell, cellIndex) => {
-          const cellValue = cells[cellIndex]
+    
+      {/* Section that shows users */}
 
-          return (
-            <div
-            id="tile"
-              key={cellIndex}
-              onClick={() => Rune.actions.claimCell(cellIndex)}
-              data-player={(cellValue !== null
-                ? playerIds.indexOf(cellValue)
-                : -1
-              ).toString()}
-              data-dim={String(
-                (winCombo && !winCombo.includes(cellIndex)) ||
-                  (!freeCells && !winCombo)
-              )}
-              {...(cells[cellIndex] ||
-              lastMovePlayerId === yourPlayerId ||
-              winCombo
-                ? { "data-disabled": "" }
-                : {})}
-            />
-          )
-        })}
-      </div>
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
           const player = Rune.getPlayerInfo(playerId)

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { PlayerId } from "rune-sdk"
-
+import BoardCanvas from "./components/BoardCanvas.tsx";
 import { GameState } from "./logic/logic.ts"
 
 function App() {
@@ -28,8 +28,10 @@ function App() {
 
   return (
     <>
-    
+
       {/* Section that shows users */}
+
+      <BoardCanvas/>
 
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {

@@ -1,38 +1,5 @@
 import type { PlayerId, RuneClient } from "rune-sdk"
 
-export type Cells = (PlayerId | null)[]
-export interface GameState {
-  cells: Cells
-  winCombo: number[] | null
-  lastMovePlayerId: PlayerId | null
-  playerIds: PlayerId[]
-  freeCells?: boolean
-}
-
-type GameActions = {
-  claimCell: (cellIndex: number) => void
-}
-
-declare global {
-  const Rune: RuneClient<GameState, GameActions>
-}
-
-function findWinningCombo(cells: Cells) {
-  return (
-    [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ].find((combo) =>
-      combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
-    ) || null
-  )
-}
 
 Rune.initLogic({
   minPlayers: 2,
@@ -80,3 +47,38 @@ Rune.initLogic({
     },
   },
 })
+
+export type Cells = (PlayerId | null)[]
+export interface GameState {
+  cells: Cells
+  winCombo: number[] | null
+  lastMovePlayerId: PlayerId | null
+  playerIds: PlayerId[]
+  freeCells?: boolean
+}
+
+type GameActions = {
+  claimCell: (cellIndex: number) => void
+}
+
+declare global {
+  const Rune: RuneClient<GameState, GameActions>
+}
+
+function findWinningCombo(cells: Cells) {
+  return (
+    [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ].find((combo) =>
+      combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
+    ) || null
+  )
+}
+

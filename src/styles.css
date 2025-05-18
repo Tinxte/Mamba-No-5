@@ -1,11 +1,15 @@
+@font-face {
+  font-family: Silkscreen-Regular;
+  src: url(../public/fonts/Silkscreen-Regular.ttf);
+}
+
 body,
 html {
   padding: 0;
   margin: 0;
   background: #333;
   color: #e6e6e6;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Silkscreen-Regular", Silkscreen-Regular Arial, Helvetica, sans-serif;
 }
 
 main {

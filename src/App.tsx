@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { PlayerId } from "rune-sdk"
 
 import selectSoundAudio from "./assets/select.wav"
-import { GameState } from "./logic.ts"
+import { GameState } from "./logic/logic.ts"
 
 const selectSound = new Audio(selectSoundAudio)
 

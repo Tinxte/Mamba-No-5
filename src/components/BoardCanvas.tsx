@@ -10,23 +10,33 @@ const timeDelay = 100
 export default function BoardCanvas( { }) {
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const context = canvasRef.getContext('2d');
+    const context = useRef<CanvasRenderingContext2D | null>(null);
+    if (canvasRef.current === null) {
+        throw new Error("canvasRef is not used");
+    }
+    canvasRef.current.width = canvasX;
+    canvasRef.current.height = canvasY;
+    context.current = canvasRef.current.getContext('2d');
+    
+    // const [snake, setSnake] = useState(initialSnake)
+    // const [direction, setDirection] = useState([ 0, -1])
+    // const [ delay, setDelay ] = useState<number | null>(null)
 
-    const [snake, setSnake] = useState(initialSnake)
-    const [direction, setDirection] = useState([ 0, -1])
-    const [ delay, setDelay ] = useState<number | null>(null)
-
-    // put tile image into HTML canvas
+    // // put tile image into HTML canvas
     const tileImage = new Image();
     tileImage.src = "src/assets/dance-floor-tile-PwBB-Desaturated-32px.png";
-    context.drawImage(tileImage, 0, 0);
-    
+    if (context === null) {
+      throw new Error("context is not used");
+    }
+    // context.drawImage(tileImage, 0, 0);
+
     return (
         // HTML canvas object
         <canvas
+        id="game-canvas"
         ref={canvasRef}
         width={canvasX}
         height={canvasY}>
         </canvas>
     )
-}
+};

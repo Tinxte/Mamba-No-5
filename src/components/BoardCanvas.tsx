@@ -1,8 +1,7 @@
-import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { GameEngine } from "../logic/logic";
 
-const canvasX = 224
-const canvasY = 224
+
 const initialSnake = [ [ 4, 10 ], [ 4, 10 ] ]
 const scale = 50
 const timeDelay = 100
@@ -11,32 +10,46 @@ export default function BoardCanvas( { }) {
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const context = useRef<CanvasRenderingContext2D | null>(null);
-    if (canvasRef.current === null) {
-        throw new Error("canvasRef is not used");
-    }
-    canvasRef.current.width = canvasX;
-    canvasRef.current.height = canvasY;
-    context.current = canvasRef.current.getContext('2d');
-    
-    // const [snake, setSnake] = useState(initialSnake)
-    // const [direction, setDirection] = useState([ 0, -1])
-    // const [ delay, setDelay ] = useState<number | null>(null)
+    const engine = useRef<GameEngine | null>(null);
+    const canvasX = 224
+    const canvasY = 224
 
-    // // put tile image into HTML canvas
-    const tileImage = new Image();
-    tileImage.src = "src/assets/dance-floor-tile-PwBB-Desaturated-32px.png";
-    if (context === null) {
-      throw new Error("context is not used");
-    }
-    // context.drawImage(tileImage, 0, 0);
+    useEffect(() => {
+        // if (canvasRef.current === null) {
+        //     throw new Error("canvasRef is not used");
+        // }
+        if(canvasRef.current){
+            canvasRef.current.width = canvasX;
+            canvasRef.current.height = canvasY;
+            context.current = canvasRef.current.getContext('2d');
 
+            if (context.current) {
+                const ctx = context.current;
+                engine.current = new GameEngine(
+                    ctx
+            );
+            }
+        }
+        
+        // const [snake, setSnake] = useState(initialSnake)
+        // const [direction, setDirection] = useState([ 0, -1])
+        // const [ delay, setDelay ] = useState<number | null>(null)
+
+        // // put tile image into HTML canvas
+        // const tileImage = new Image();
+        // tileImage.src = "src/assets/dance-floor-tile-PwBB-Desaturated-32px.png";
+        // if (context === null) {
+        // throw new Error("context is not used");
+        // }
+        // context.drawImage(tileImage, 0, 0);
+    }, []);
     return (
         // HTML canvas object
-        <canvas
-        id="game-canvas"
-        ref={canvasRef}
-        width={canvasX}
-        height={canvasY}>
-        </canvas>
-    )
+        <div>
+            <canvas
+            id="game-canvas"
+            ref={canvasRef}>
+            </canvas>
+        </div>
+    );
 };

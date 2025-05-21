@@ -11,22 +11,23 @@ export default function BoardCanvas( { }) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const context = useRef<CanvasRenderingContext2D | null>(null);
     const engine = useRef<GameEngine | null>(null);
-    const canvasX = 224
-    const canvasY = 224
+    const canvasSidesLength = 224;
 
     useEffect(() => {
         // if (canvasRef.current === null) {
         //     throw new Error("canvasRef is not used");
         // }
         if(canvasRef.current){
-            canvasRef.current.width = canvasX;
-            canvasRef.current.height = canvasY;
-            context.current = canvasRef.current.getContext('2d');
+            canvasRef.current.width = canvasSidesLength;
+            canvasRef.current.height = canvasSidesLength;
+            context.current = canvasRef.current.getContext("2d");
 
             if (context.current) {
                 const ctx = context.current;
                 engine.current = new GameEngine(
-                    ctx
+                    ctx,
+                    canvasSidesLength,
+                    true
             );
             }
         }
@@ -38,11 +39,11 @@ export default function BoardCanvas( { }) {
         // // put tile image into HTML canvas
         // const tileImage = new Image();
         // tileImage.src = "src/assets/dance-floor-tile-PwBB-Desaturated-32px.png";
-        // if (context === null) {
-        // throw new Error("context is not used");
-        // }
-        // context.drawImage(tileImage, 0, 0);
-    }, []);
+        
+        // tileImage.addEventListener("load", () => {
+        //     ctx.drawImage(tileImage, 0, 0);
+        // })
+    }, []);    
     return (
         // HTML canvas object
         <div>

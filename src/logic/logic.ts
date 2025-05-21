@@ -1,5 +1,9 @@
 import type { PlayerId, RuneClient } from "rune-sdk"
-
+import Snake from "./Snake"
+export interface Coordinate {
+  row: number;
+  col: number;
+}
 
 Rune.initLogic({
   minPlayers: 2,
@@ -49,6 +53,8 @@ Rune.initLogic({
 })
 
 export type Cells = (PlayerId | null)[]
+
+type Interlinked = "snake" | null;
 export interface GameState {
   cells: Cells
   winCombo: number[] | null
@@ -84,11 +90,116 @@ function findWinningCombo(cells: Cells) {
 
 export class GameEngine {
   private context: CanvasRenderingContext2D;
+  private boardSidesLength: number;
+  private numOfRowsAndCols: number;
+  private _gameBoard: Interlinked[][];
+  private readonly staggerFrame: number;
+  private currentFrameCount: number;
+  private internalPlayState: boolean;
+  
+  snake: Snake;
 
   constructor(
-    context: CanvasRenderingContext2D
+    context: CanvasRenderingContext2D,
+    boardSidesLength: number,
+    isPlaying: boolean
   ) {
     this.context = context;    
+
+    this.snake = new Snake();
+    this.internalPlayState = isPlaying;
+    this.boardSidesLength = boardSidesLength;
+    this.numOfRowsAndCols = 26;
+    this._gameBoard = [];
+
+    this.currentFrameCount = 0;
+    this.staggerFrame = 8;
+  }
+  private get gameBoard(): Interlinked[][] {
+    if (this._gameBoard.length === 0) {
+      const nRows = this.numOfRowsAndCols;
+      const nCols = this.numOfRowsAndCols;
+
+      for (let i = 0; i < nRows; i++) {
+        this._gameBoard.push(Array.from(Array(nCols)).fill(null));
+      }
+    }
+
+    return this._gameBoard;
+  }
+
+  private set gameBoard(newGameBoard: Interlinked[][]) {
+    this._gameBoard = newGameBoard;
+  }
+
+    private generateGrid() {
+    const cellWidth = this.boardSidesLength / this.numOfRowsAndCols;
+    const cellHeight = this.boardSidesLength / this.numOfRowsAndCols;
+
+    this.gameBoard.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        switch (cell) {
+          case "snake":
+            this.context.fillStyle = "#A2C579";
+            break;
+          // case "food":
+          //   this.context.fillStyle = "salmon";
+          //   break;
+          case null:
+            this.context.fillStyle = "white";
+            break;
+        }
+        this.context.fillRect(
+          colIndex * cellWidth,
+          rowIndex * cellHeight,
+          cellWidth,
+          cellHeight
+        );
+      });
+    });
+  }
+    private setSnakeOnBoard() {
+    const newBoard = this.gameBoard.map((row) => row.fill(null));
+    this.snake.bodyCoordinates.forEach((snakeCoord) => {
+      newBoard[snakeCoord.row][snakeCoord.col] = "snake";
+    });
+    this.gameBoard = newBoard;
+  } 
+  
+  private renderBoard() {
+    this.setSnakeOnBoard();
+    // this.setFoodOnBoard();
+    this.generateGrid();
+  }
+    animate(isPlaying: boolean) {
+    this.internalPlayState = isPlaying;
+
+    if (this.currentFrameCount < this.staggerFrame) {
+      this.currentFrameCount++;
+    } else {
+      this.currentFrameCount = 0;
+
+      // if (this.externalScore !== this.score) {
+      //   this.setScore(this.score);
+      // }
+
+      // if (this.isGameOver()) {
+      //   this.setIsGameOver(true);
+      //   return;
+      // }
+
+      this.context.clearRect(
+        0,
+        0,
+        this.boardSidesLength,
+        this.boardSidesLength
+      );
+      this.renderBoard();
+      // this.snake.move(this.foodCoordinate);
+    }
+
+    this.internalPlayState &&
+      requestAnimationFrame(() => this.animate(this.internalPlayState));
   }
 }
 
